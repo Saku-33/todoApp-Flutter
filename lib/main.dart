@@ -38,6 +38,23 @@ class _TodoListPageState extends State<TodoListPage> {
             return Card(
               child: ListTile(
                 title: Text(todoList[index]),
+                trailing: IconButton(
+                  icon: Icon(Icons.more_vert),
+                  onPressed: () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                            title: Text(todoList[index]),
+                            actions: [
+                              IconButton(
+                                  icon: Icon(Icons.delete),
+                                  color: Colors.blue,
+                                  onPressed: () {
+                                    deleteTodo(index);
+                                    Navigator.pop(context);
+                                  }),
+                            ],
+                          )),
+                ),
               ),
             );
           }),
@@ -57,6 +74,13 @@ class _TodoListPageState extends State<TodoListPage> {
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  @override
+  void deleteTodo(int index) {
+    setState(() {
+      todoList.removeAt(index);
+    });
   }
 }
 
